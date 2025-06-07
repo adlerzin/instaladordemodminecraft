@@ -324,6 +324,11 @@ class MinecraftModInstaller(ctk.CTk):
             messagebox.showwarning("Atenção", "Primeiro, selecione a pasta .minecraft antes de instalar um mod.")
             return
 
+        if not os.path.exists(self.mods_dir):
+            os.makedirs(self.mods_dir)
+            print(f"Pasta '{self.mods_dir}' criada com sucesso.")
+        else:
+            print(f"A pasta '{self.mods_dir}' já existe.")
         # Desabilita todos os controles de UI para evitar novas ações
         self._set_ui_state("disabled")
 
@@ -369,6 +374,7 @@ class MinecraftModInstaller(ctk.CTk):
 
     def _handle_installation_error(self, message):
         self._update_summary_textbox(f"Erro no processo de instalação: {message} ❌", append=False)
+        self._update_summary_textbox(f"")
         messagebox.showerror("Erro de Instalação", message)
         self._set_ui_state("normal")
 
